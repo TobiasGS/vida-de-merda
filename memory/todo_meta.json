@@ -5,7 +5,7 @@
         "id": "1",
         "content": "Solicitar credenciais do Supabase para o backend",
         "details": "Preciso das credenciais do Supabase para configurar o banco de dados que armazenará os comentários dos usuários.",
-        "status": "pending",
+        "status": "completed",
         "priority": "high"
       },
       "2": {
