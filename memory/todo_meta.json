@@ -1,0 +1,20 @@
+{
+  "todos": {
+    "Coordinator": {
+      "1": {
+        "id": "1",
+        "content": "Solicitar credenciais do Supabase para o backend",
+        "details": "Preciso das credenciais do Supabase para configurar o banco de dados que armazenará os comentários dos usuários.",
+        "status": "pending",
+        "priority": "high"
+      },
+      "2": {
+        "id": "2",
+        "content": "Desenvolver o site fullstack 'Vida de Merda'",
+        "details": "Criar aplicação completa com: frontend responsivo (cores roxo, azul, preto), sistema de comentários anônimos com limite de 1000 caracteres, interface minimalista, armazenamento no Supabase.",
+        "status": "pending",
+        "priority": "high"
+      }
+    }
+  }
+}
