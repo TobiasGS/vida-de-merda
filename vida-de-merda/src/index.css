@@ -123,18 +123,3 @@ textarea:focus {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
-
-/* Adicione no seu arquivo CSS */
-.like-button {
-  background: #ffebee;
-  border: 2px solid #ffcdd2;
-  border-radius: 20px;
-  padding: 8px 16px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.like-button:hover {
-  background: #ffcdd2;
-  transform: scale(1.05);
-}
