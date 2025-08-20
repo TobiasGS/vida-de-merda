@@ -1,33 +1,9 @@
-import { useState } from 'react'
 import { usePosts } from '../hooks/usePosts'
 import { formatDistanceToNow } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
-import { supabase } from '../supabaseClient'
 
 export function PostList() {
   const { posts, loading, error, refreshPosts } = usePosts()
-  const [likes, setLikes] = useState({})
-
-  const handleLike = async (postId) => {
-    try {
-      const { error } = await supabase
-        .from('likes')
-        .insert({ post_id: postId })
-
-      if (error) {
-        console.error(error)
-        return
-      }
-
-      // Atualiza localmente
-      setLikes(prev => ({
-        ...prev,
-        [postId]: (prev[postId] || 0) + 1
-      }))
-    } catch (err) {
-      console.error('Erro ao curtir:', err)
-    }
-  }
 
   if (loading) {
     return (
@@ -104,20 +80,12 @@ export function PostList() {
               {post.content}
             </p>
             
-            <div className="mt-4 pt-3 border-t border-gray-700 flex items-center justify-between">
+            <div className="mt-4 pt-3 border-t border-gray-700">
               <div className="flex items-center space-x-4 text-sm text-gray-500">
                 <span>{post.content.length} caracteres</span>
                 <span>•</span>
                 <span>Anônimo</span>
               </div>
-
-              <button
-                onClick={() => handleLike(post.id)}
-                className="flex items-center space-x-1 px-3 py-1 rounded-lg bg-gray-800 hover:bg-gray-700 text-red-400 transition-colors"
-              >
-                <span>❤️</span>
-                <span>{likes[post.id] || 0}</span>
-              </button>
             </div>
           </div>
         ))}
