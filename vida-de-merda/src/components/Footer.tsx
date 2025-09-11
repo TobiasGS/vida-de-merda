@@ -106,10 +106,7 @@ export function Footer() {
               <p className="mt-1">Desenvolvido com React + TypeScript + Supabase</p>
             </div>
             
-            <div className="text-gray-500 text-sm text-center md:text-right">
-              <p>Google AdSense ID: pub-7087519448195686</p>
-              <p className="mt-1">Site responsivo e otimizado para SEO</p>
-            </div>
+
           </div>
         </div>
       </div>

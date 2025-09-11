@@ -147,14 +147,7 @@ export function CookiesPage() {
                 </li>
               </ul>
 
-              <h3 className="text-xl font-semibold text-gray-200 mb-3">5.3 Opt-out para Google AdSense</h3>
-              <p className="text-gray-300 leading-relaxed mb-3">
-                Você pode optar por não receber anúncios personalizados:
-              </p>
-              <ul className="text-gray-300 space-y-2">
-                <li>• <strong>Configurações de Anúncios do Google:</strong> <a href="https://adssettings.google.com" className="text-purple-400 hover:text-purple-300" target="_blank" rel="noopener noreferrer">adssettings.google.com</a></li>
-                <li>• <strong>Opt-out da NAI:</strong> <a href="https://optout.networkadvertising.org" className="text-purple-400 hover:text-purple-300" target="_blank" rel="noopener noreferrer">optout.networkadvertising.org</a></li>
-              </ul>
+
             </section>
 
             <section>
