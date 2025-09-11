@@ -22,6 +22,7 @@ interface Category {
   slug: string
   description: string
   color: string
+  icon: string
 }
 
 export function CategoriaPage() {
@@ -104,21 +105,7 @@ export function CategoriaPage() {
     )
   }
 
-  const getCategoryIcon = (name: string) => {
-    if (name.includes('Trabalho')) return '🏢'
-    if (name.includes('Escola')) return '🎓'
-    if (name.includes('Relacionamentos')) return '❤️'
-    if (name.includes('Família')) return '👨‍👩‍👧‍👦'
-    if (name.includes('Transporte')) return '🚗'
-    if (name.includes('Compras')) return '🛍️'
-    if (name.includes('Saúde')) return '🏥'
-    if (name.includes('Festas')) return '🎉'
-    if (name.includes('Tecnologia')) return '💻'
-    if (name.includes('Esportes')) return '🏃‍♂️'
-    if (name.includes('Comida')) return '🍕'
-    if (name.includes('Viagens')) return '✈️'
-    return '😊'
-  }
+
 
   return (
     <>
@@ -142,7 +129,7 @@ export function CategoriaPage() {
 
         {/* Category Header */}
         <div className="text-center mb-12">
-          <div className="text-6xl mb-4">{getCategoryIcon(category.name)}</div>
+          <div className="text-6xl mb-4">{category.icon || '😊'}</div>
           <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-400 via-blue-500 to-purple-600 bg-clip-text text-transparent mb-4">
             Histórias de {category.name}
           </h1>

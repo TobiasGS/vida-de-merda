@@ -27,6 +27,7 @@ interface Category {
   slug: string
   color: string
   description: string
+  icon: string
 }
 
 export function HistoriasPage() {
@@ -141,18 +142,7 @@ export function HistoriasPage() {
                   : 'bg-gray-900/50 border-gray-700 text-gray-400 hover:border-purple-500/30'
               }`}
             >
-              <div className="text-2xl mb-2">{category.name.includes('Trabalho') ? '🏢' : 
-                category.name.includes('Escola') ? '🎓' :
-                category.name.includes('Relacionamentos') ? '❤️' :
-                category.name.includes('Família') ? '👨‍👩‍👧‍👦' :
-                category.name.includes('Transporte') ? '🚗' :
-                category.name.includes('Compras') ? '🛍️' :
-                category.name.includes('Saúde') ? '🏥' :
-                category.name.includes('Festas') ? '🎉' :
-                category.name.includes('Tecnologia') ? '💻' :
-                category.name.includes('Esportes') ? '🏃‍♂️' :
-                category.name.includes('Comida') ? '🍕' :
-                category.name.includes('Viagens') ? '✈️' : '😊'}</div>
+              <div className="text-2xl mb-2">{category.icon || '😊'}</div>
               <div className="font-semibold text-sm">{category.name}</div>
             </button>
           ))}
