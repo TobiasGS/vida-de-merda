@@ -190,15 +190,8 @@ export function ContatoPage() {
                 <div className="flex items-start">
                   <Mail className="w-5 h-5 text-purple-400 mr-3 mt-1" />
                   <div>
-                    <div className="font-medium text-white">Email Principal</div>
-                    <div className="text-gray-400 text-sm">contato@vidademerda.blog</div>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <Shield className="w-5 h-5 text-blue-400 mr-3 mt-1" />
-                  <div>
-                    <div className="font-medium text-white">Denúncias</div>
-                    <div className="text-gray-400 text-sm">denuncia@vidademerda.blog</div>
+                    <div className="font-medium text-white">Email de Contato</div>
+                    <div className="text-gray-400 text-sm">vidademerda.contato@gmail.com</div>
                   </div>
                 </div>
                 <div className="flex items-start">
@@ -218,7 +211,7 @@ export function ContatoPage() {
                 <div>
                   <h4 className="font-medium text-white text-sm mb-2">Como posso denunciar conteúdo inadequado?</h4>
                   <p className="text-gray-400 text-sm">
-                    Use o formulário acima selecionando "Denúncia de Conteúdo" ou envie email para denuncia@vidademerda.blog.
+                    Use o formulário acima selecionando "Denúncia de Conteúdo" e descreva detalhadamente o problema.
                   </p>
                 </div>
                 <div>

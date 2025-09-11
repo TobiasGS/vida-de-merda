@@ -185,7 +185,7 @@ export function CookiesPage() {
                 Se você tiver alguma dúvida sobre nossa Política de Cookies, entre em contato conosco:
               </p>
               <ul className="text-gray-300 space-y-2">
-                <li>• <strong>Email:</strong> contato@vidademerda.blog</li>
+                <li>• <strong>Email:</strong> vidademerda.contato@gmail.com</li>
                 <li>• <strong>Formulário:</strong> <a href="/contato" className="text-purple-400 hover:text-purple-300">Página de Contato</a></li>
               </ul>
             </section>

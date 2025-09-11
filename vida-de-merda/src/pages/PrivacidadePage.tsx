@@ -112,7 +112,7 @@ export function PrivacidadePage() {
                 <li>• <strong>Revogação:</strong> Retirar o consentimento a qualquer momento</li>
               </ul>
               <p className="text-gray-300 leading-relaxed">
-                Para exercer seus direitos, entre em contato conosco através do e-mail: contato@vidademerda.blog
+                Para exercer seus direitos, entre em contato conosco através do e-mail: vidademerda.contato@gmail.com
               </p>
             </section>
 
@@ -178,7 +178,7 @@ export function PrivacidadePage() {
                 entre em contato conosco:
               </p>
               <div className="bg-gray-800/50 border border-gray-600 rounded-lg p-4">
-                <p className="text-gray-300"><strong>E-mail:</strong> contato@vidademerda.blog</p>
+                <p className="text-gray-300"><strong>E-mail:</strong> vidademerda.contato@gmail.com</p>
                 <p className="text-gray-300"><strong>Site:</strong> vidademerda.blog/contato</p>
               </div>
             </section>

@@ -86,7 +86,7 @@ export function SEOHead({
           ],
           "contactPoint": {
             "@type": "ContactPoint",
-            "email": "contato@vidademerda.blog",
+            "email": "vidademerda.contato@gmail.com",
             "contactType": "Customer Service"
           }
         })}

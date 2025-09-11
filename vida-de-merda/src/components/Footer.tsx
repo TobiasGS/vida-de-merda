@@ -87,11 +87,11 @@ export function Footer() {
               </li>
               <li>
                 <a 
-                  href="mailto:contato@vidademerda.blog"
+                  href="mailto:vidademerda.contato@gmail.com"
                   className="text-gray-400 hover:text-purple-400 transition-colors flex items-center"
                 >
                   <Mail className="w-4 h-4 mr-2" />
-                  Denunciar Conteúdo
+                  Contato
                 </a>
               </li>
             </ul>
