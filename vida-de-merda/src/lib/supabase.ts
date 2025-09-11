@@ -10,4 +10,7 @@ export type Post = {
   content: string
   created_at: string
   is_approved: boolean
+  category_id?: string
+  likes_count?: number
+  is_featured?: boolean
 }

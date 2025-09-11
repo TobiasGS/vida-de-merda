@@ -7,6 +7,7 @@ import { Calendar, Heart, ArrowLeft } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { formatDistanceToNow } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
+import { LikeButton } from '../components/LikeButton'
 
 interface Post {
   id: string
@@ -201,6 +202,11 @@ export function CategoriaPage() {
                     <span>•</span>
                     <span>Anônimo</span>
                   </div>
+                  <LikeButton 
+                    postId={post.id} 
+                    likesCount={post.likes_count || 0} 
+                    size="sm"
+                  />
                 </div>
               </div>
             ))}

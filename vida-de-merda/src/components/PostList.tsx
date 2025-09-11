@@ -1,6 +1,7 @@
 import { usePosts } from '../hooks/usePosts'
 import { formatDistanceToNow } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
+import { LikeButton } from './LikeButton'
 
 export function PostList() {
   const { posts, loading, error, refreshPosts } = usePosts()
@@ -81,10 +82,17 @@ export function PostList() {
             </p>
             
             <div className="mt-4 pt-3 border-t border-gray-700">
-              <div className="flex items-center space-x-4 text-sm text-gray-500">
-                <span>{post.content.length} caracteres</span>
-                <span>•</span>
-                <span>Anônimo</span>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-4 text-sm text-gray-500">
+                  <span>{post.content.length} caracteres</span>
+                  <span>•</span>
+                  <span>Anônimo</span>
+                </div>
+                <LikeButton 
+                  postId={post.id} 
+                  likesCount={post.likes_count || 0} 
+                  size="sm"
+                />
               </div>
             </div>
           </div>

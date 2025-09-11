@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import { Search, Filter, Calendar, Heart } from 'lucide-react'
 import { formatDistanceToNow } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
+import { LikeButton } from '../components/LikeButton'
 
 interface Post {
   id: string
@@ -255,6 +256,11 @@ export function HistoriasPage() {
                       <span>•</span>
                       <span>Anônimo</span>
                     </div>
+                    <LikeButton 
+                      postId={post.id} 
+                      likesCount={post.likes_count || 0} 
+                      size="sm"
+                    />
                   </div>
                 </div>
               ))

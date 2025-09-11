@@ -1,11 +1,40 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { usePosts } from '../hooks/usePosts'
+import { supabase } from '../lib/supabase'
+
+interface Category {
+  id: string
+  name: string
+  slug: string
+  icon: string
+}
 
 export function PostForm() {
   const [content, setContent] = useState('')
+  const [selectedCategory, setSelectedCategory] = useState('')
+  const [categories, setCategories] = useState<Category[]>([])
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
   const { createPost } = usePosts()
+
+  useEffect(() => {
+    fetchCategories()
+  }, [])
+
+  const fetchCategories = async () => {
+    try {
+      const { data } = await supabase
+        .from('categories')
+        .select('id, name, slug, icon')
+        .order('name')
+      
+      if (data) {
+        setCategories(data)
+      }
+    } catch (error) {
+      console.error('Error fetching categories:', error)
+    }
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -14,10 +43,11 @@ export function PostForm() {
     setIsSubmitting(true)
     setMessage(null)
 
-    const result = await createPost(content)
+    const result = await createPost(content, selectedCategory || undefined)
     
     if (result.success) {
       setContent('')
+      setSelectedCategory('')
       setMessage({ type: 'success', text: 'Sua história foi compartilhada com sucesso!' })
     } else {
       setMessage({ type: 'error', text: result.error || 'Erro ao enviar a história' })
@@ -52,6 +82,29 @@ export function PostForm() {
           }`}>
             {remainingChars} caracteres restantes
           </div>
+        </div>
+
+        {/* Category Selector */}
+        <div className="space-y-2">
+          <label className="block text-sm font-medium text-gray-300">
+            Categoria (opcional)
+          </label>
+          <select
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            className="w-full p-3 bg-gray-800 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            disabled={isSubmitting}
+          >
+            <option value="">Selecione uma categoria</option>
+            {categories.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.icon} {category.name}
+              </option>
+            ))}
+          </select>
+          <p className="text-xs text-gray-400">
+            Se nenhuma categoria for selecionada, sua história será categorizada como "Geral"
+          </p>
         </div>
 
         <button
