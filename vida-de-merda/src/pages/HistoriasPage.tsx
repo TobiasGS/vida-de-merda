@@ -56,23 +56,17 @@ export function HistoriasPage() {
         setCategories(categoriesData)
       }
 
-      // Build posts query
+      // Build posts query (simplified to avoid JOIN issues)
       let query = supabase
         .from('posts')
-        .select(`
-          *,
-          categories (
-            name,
-            slug,
-            color
-          )
-        `)
+        .select('*')
         .eq('is_approved', true)
 
       // Apply category filter
       if (selectedCategory) {
         query = query.eq('category_id', selectedCategory)
       }
+      // When no category is selected, show all posts (including those without category)
 
       // Apply sorting
       if (sortBy === 'recent') {
@@ -83,10 +77,30 @@ export function HistoriasPage() {
 
       query = query.limit(50)
 
-      const { data: postsData } = await query
+      const { data: postsData, error: postsError } = await query
+
+      if (postsError) {
+        console.error('Error fetching posts:', postsError)
+        return
+      }
 
       if (postsData) {
-        setPosts(postsData)
+        // Add category info to posts if needed
+        const postsWithCategories = postsData.map(post => {
+          if (post.category_id) {
+            const category = categoriesData?.find(cat => cat.id === post.category_id)
+            return {
+              ...post,
+              categories: category ? {
+                name: category.name,
+                slug: category.slug,
+                color: category.color
+              } : null
+            }
+          }
+          return post
+        })
+        setPosts(postsWithCategories)
       }
     } catch (error) {
       console.error('Error fetching data:', error)
