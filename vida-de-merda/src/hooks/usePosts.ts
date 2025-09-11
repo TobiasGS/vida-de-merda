@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { supabase, type Post } from '../lib/supabase'
-import { getUserIdentifier } from '../lib/userIdentifier'
+import { generateUniqueUserId } from '../utils/userIdentifier'
 
 export function usePosts() {
   const [posts, setPosts] = useState<Post[]>([])
@@ -58,7 +58,7 @@ export function usePosts() {
   }
 
   const toggleLike = async (postId: string) => {
-    const userIdentifier = getUserIdentifier()
+    const userIdentifier = generateUniqueUserId()
     console.log('📦 Iniciando toggle like:', { postId, userIdentifier })
     
     try {
