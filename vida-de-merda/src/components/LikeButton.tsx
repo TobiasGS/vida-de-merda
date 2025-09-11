@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Heart } from 'lucide-react'
 import { usePosts } from '../hooks/usePosts'
+import { supabase } from '../lib/supabase'
 
 interface LikeButtonProps {
   postId: string
@@ -11,16 +12,35 @@ interface LikeButtonProps {
 export function LikeButton({ postId, likesCount, size = 'md' }: LikeButtonProps) {
   const [isLiked, setIsLiked] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const [currentLikes, setCurrentLikes] = useState(likesCount)
-  const { toggleLike, checkUserLike } = usePosts()
+  const [currentLikes, setCurrentLikes] = useState(0)
+  const { toggleLike } = usePosts()
 
   useEffect(() => {
-    checkIfUserLiked()
-  }, [postId])
+    loadLikeState()
+  }, [postId, likesCount])
 
-  const checkIfUserLiked = async () => {
-    const liked = await checkUserLike(postId)
-    setIsLiked(liked)
+  const loadLikeState = async () => {
+    // Carregar contagem real de curtidas do banco
+    const { data: likesData } = await supabase
+      .from('comment_likes')
+      .select('id', { count: 'exact' })
+      .eq('post_id', postId)
+    
+    const actualCount = likesData?.length || 0
+    setCurrentLikes(actualCount)
+    
+    // Verificar se o usuário atual curtiu
+    const userIdentifier = localStorage.getItem('user-id')
+    if (userIdentifier) {
+      const { data: userLike } = await supabase
+        .from('comment_likes')
+        .select('id')
+        .eq('post_id', postId)
+        .eq('user_identifier', userIdentifier)
+        .maybeSingle()
+      
+      setIsLiked(!!userLike)
+    }
   }
 
   const handleLikeClick = async () => {
@@ -28,17 +48,16 @@ export function LikeButton({ postId, likesCount, size = 'md' }: LikeButtonProps)
 
     setIsLoading(true)
     
-    // Atualização otimista para feedback instantâneo
-    const wasLiked = isLiked
-    setIsLiked(!wasLiked)
-    setCurrentLikes(prev => wasLiked ? prev - 1 : prev + 1)
-    
     const result = await toggleLike(postId)
     
-    if (!result.success) {
-      // Reverter se deu erro
-      setIsLiked(wasLiked)
-      setCurrentLikes(prev => wasLiked ? prev + 1 : prev - 1)
+    if (result.success) {
+      // Atualizar estado baseado no resultado real do banco
+      setIsLiked(result.liked)
+      setCurrentLikes(result.count || 0)
+    } else {
+      console.error('Error liking post:', result.error)
+      // Recarregar estado real em caso de erro
+      await loadLikeState()
     }
     
     setIsLoading(false)
