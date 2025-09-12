@@ -21,24 +21,55 @@ export function ContatoPage() {
     setErrorMessage('')
 
     try {
-      const { error } = await supabase
-        .from('contacts')
-        .insert([
-          {
-            name: formData.name,
-            email: formData.email,
-            subject: formData.subject,
-            message: formData.message,
-            ip_address: '', // Will be set by trigger if needed
-            user_agent: navigator.userAgent
-          }
-        ])
+      console.log('🚀 Iniciando envio do formulário...')
+      console.log('📝 Dados do formulário:', formData)
+      
+      // Teste com fetch direto primeiro (como o curl que funcionou)
+      const supabaseUrl = 'https://sadehqajqbjudckhsusr.supabase.co'
+      const anonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNhZGVocWFqcWJqdWRja2hzdXNyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU2MDc0OTcsImV4cCI6MjA3MTE4MzQ5N30.etOHthFoKGOP354xT0U3GpjlbAc5MSTugR2O_vwuJ_E'
+      
+      const response = await fetch(`${supabaseUrl}/functions/v1/send-contact-email`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${anonKey}`,
+          'Content-Type': 'application/json',
+          'apikey': anonKey
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message
+        })
+      })
 
-      if (error) throw error
+      console.log('📡 Response status:', response.status)
+      console.log('📡 Response headers:', Object.fromEntries(response.headers.entries()))
+      
+      if (!response.ok) {
+        const errorText = await response.text()
+        console.error('❌ Response não OK:', errorText)
+        throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`)
+      }
 
-      setSubmitStatus('success')
-      setFormData({ name: '', email: '', subject: '', message: '' })
+      const result = await response.json()
+      console.log('✅ Resultado da função:', result)
+
+      // Check for error response
+      if (result.error) {
+        throw new Error(result.error.message || result.error || 'Erro do servidor')
+      }
+
+      // Check for success response
+      if (result.data?.success) {
+        setSubmitStatus('success')
+        setFormData({ name: '', email: '', subject: '', message: '' })
+        console.log('🎉 Mensagem enviada com sucesso! ID:', result.data.contactId)
+      } else {
+        throw new Error('Resposta inesperada do servidor')
+      }
     } catch (error: any) {
+      console.error('❌ Erro no submit:', error)
       setSubmitStatus('error')
       setErrorMessage(error.message || 'Erro ao enviar mensagem')
     } finally {
@@ -81,7 +112,7 @@ export function ContatoPage() {
               {submitStatus === 'success' && (
                 <div className="mb-6 p-4 bg-green-600/20 border border-green-500/50 rounded-lg flex items-center">
                   <CheckCircle className="w-5 h-5 text-green-400 mr-3" />
-                  <span className="text-green-300">Mensagem enviada com sucesso! Responderemos em breve.</span>
+                  <span className="text-green-300">Mensagem enviada com sucesso! Foi salva em nosso sistema e enviada por email. Responderemos em breve.</span>
                 </div>
               )}
 
